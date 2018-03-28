@@ -2,7 +2,8 @@ from lxml import html
 import argparse
 import requests
 import re
-
+import shutil
+import os
 
 class Manga:
     def __init__(self,url,date,name,chapter,title):
@@ -37,8 +38,21 @@ def get_manga_image(url):
     page=requests.get(url)
     tree=html.fromstring(page.content)
     img_xpath=tree.xpath(IMG_PAGE_XPATH)
-    print(img_xpath)
-
+    img_url=img_xpath[0].get("src")
+    print("Downloading image "+img_url)
+    response=requests.get('https:'+img_url, stream=True)
+    url=url.split('/')
+    name=url[4]
+    chapter=url[5]
+    page=url[-1]
+    #create directory for manga images if not exist
+    directory=name+'/'+chapter
+    if not os.path.exists(directory):
+        os.makedirs(directory)
+    file_name=url[4]+'_'+url[-1]+'.png'
+    with open(directory+'/'+file_name, 'wb') as out_file:
+        shutil.copyfileobj(response.raw, out_file)
+    del response
 
 def download_manga(name):
     page=requests.get(HOST)
@@ -56,8 +70,6 @@ def download_manga(name):
         for i in range(1,max_page+1):
             manga_url=manga_url.rsplit('/',1)[0]+'/'+str(i)
             get_manga_image(manga_url)
-
-
     else:
         print("No latest chapter for that manga")
 
@@ -71,7 +83,8 @@ def display(mangas):
 if __name__ == "__main__":
     parser=argparse.ArgumentParser(description='CLI tool to check and download latest manga on readms.net',
                                      formatter_class=argparse.RawTextHelpFormatter)
-    help_desc="latest".ljust(24)+"- Get latest manga in readms"+"\ndownload ${manga_name}".ljust(24)+" - Will download the latest chapter manga"
+    help_desc="latest".ljust(24)+"- Get latest manga in readms"+"\ndownload ${manga_name}".ljust(24)+" - Will download the latest chapter manga. Run first the python app.py latest to s" \
+                                                                                                     "see available manga"
     parser.add_argument('command', help=help_desc, nargs='+')
     args=parser.parse_args()
 
