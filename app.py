@@ -1,24 +1,44 @@
 from lxml import html
 import argparse
 import requests
-import sys
+
+
+class Manga:
+    def __init__(self,url,date,name,chapter,title):
+        self.url=url
+        self.name=name
+        self.chapter=chapter
+        self.title=title
+        self.date=date
+
+    def __str__(self):
+        return self.name+'-Chapter '+self.chapter+' '+self.title
+
 
 HOST = 'https://readms.net'
-NEW_RELEASES_XPATH = '//ul[@class="new-list"]/li[@class="active"]/a/'
+NEW_RELEASES_XPATH = '//div[@class="side-nav hidden-xs"]/ul[@class="new-list"]/li[@class="active"]/a'
 
 
 def get_new_releases():
     page=requests.get(HOST)
     tree=html.fromstring(page.content)
-    results=tree.xpath(NEW_RELEASES_XPATH+'text()'+'|'+NEW_RELEASES_XPATH+'attribute::href')
-    new_releases={}
-    for i in range(0, len(results), 2):
-        new_releases[results[i+1].strip()]=results[i].strip()
+    results = tree.xpath(NEW_RELEASES_XPATH)
+    new_releases=[]
+    for r in results:
+        details=[t.strip() for t in r.itertext()]
+        manga=Manga(r.get('href'),details[0],details[1],details[2],details[3])
+        new_releases.append(manga)
     return new_releases;
 
 
 def download_manga(name, chapter):
     pass
+
+
+def display(mangas):
+    print('**********Latest Release**********')
+    for manga in mangas:
+        print(manga.name.ljust(25)+' Chapter-'+manga.chapter.ljust(3)+(' ('+manga.title+')'))
 
 
 if __name__ == "__main__":
@@ -32,8 +52,7 @@ if __name__ == "__main__":
 
     if command=="latest":
         new_releases=get_new_releases()
-        for key in new_releases.keys():
-            print(key)
+        display(new_releases)
     elif command=="download":
         download_manga()
     else:
