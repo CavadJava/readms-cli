@@ -83,7 +83,7 @@ def display(mangas):
         print(manga.name.ljust(25)+' Chapter-'+manga.chapter.ljust(3)+(' ('+manga.title+')'))
 
 
-if __name__ == "__main__":
+def main():
     parser=argparse.ArgumentParser(description='CLI tool to check and download latest manga on readms.net',
                                      formatter_class=argparse.RawTextHelpFormatter)
     help_desc="latest".ljust(24)+"- Get latest manga in readms"+"\ndownload ${manga_name}".ljust(24)+" - Will download the latest chapter manga. Run first the python readms.py latest to s" \
@@ -99,4 +99,8 @@ if __name__ == "__main__":
         download_manga(command[1])
     else:
         parser.print_help()
+
+
+if __name__ == "__main__":
+    main()
 
