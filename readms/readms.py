@@ -5,6 +5,7 @@ import re
 import shutil
 import os
 
+
 class Manga:
     def __init__(self,url,date,name,chapter,title):
         self.url=url
@@ -21,6 +22,7 @@ HOST = 'https://readms.net'
 NEW_RELEASES_XPATH = '//div[@class="side-nav hidden-xs"]/ul[@class="new-list"]/li[@class="active"]/a'
 MANGA_PAGES_XPATH = '//div[@class="btn-group btn-reader-page"]/ul[@class="dropdown-menu"]/li'
 IMG_PAGE_XPATH = '//*[@id="manga-page"]'
+
 
 def get_new_releases():
     page=requests.get(HOST)
@@ -54,6 +56,7 @@ def get_manga_image(url):
         shutil.copyfileobj(response.raw, out_file)
     del response
 
+
 def download_manga(name):
     page=requests.get(HOST)
     tree=html.fromstring(page.content)
@@ -83,7 +86,7 @@ def display(mangas):
 if __name__ == "__main__":
     parser=argparse.ArgumentParser(description='CLI tool to check and download latest manga on readms.net',
                                      formatter_class=argparse.RawTextHelpFormatter)
-    help_desc="latest".ljust(24)+"- Get latest manga in readms"+"\ndownload ${manga_name}".ljust(24)+" - Will download the latest chapter manga. Run first the python app.py latest to s" \
+    help_desc="latest".ljust(24)+"- Get latest manga in readms"+"\ndownload ${manga_name}".ljust(24)+" - Will download the latest chapter manga. Run first the python readms.py latest to s" \
                                                                                                      "see available manga"
     parser.add_argument('command', help=help_desc, nargs='+')
     args=parser.parse_args()
