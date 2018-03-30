@@ -1,15 +1,19 @@
 ### Overview
 A cli tool for downloading latest manga on https://readms.net
 
+### Installation
+<pre>
+  pip install readms-cli
+</pre>
+
+
 ### Usage:
 * List latest manga on readms
-  <pre>$ python app.py latest</pre>
-* List available manga on readms
-  <pre>$ python app.py list</pre>
-* Download manga, Note: Run "python app.py latest" first to see available manga for download
-  <pre>$ python app.py download "${name}"
+  <pre>$ readms latest</pre>
+* Download manga, Note: Run "readms latest" first to see available manga for download
+  <pre>$ readms download "${name}"
     Examples 
-     $python app.py download "Boruto"
-     $python app.py download "One Piece"
+     $readms download "Boruto"
+     $readms download "One Piece"
   </pre> 
   
