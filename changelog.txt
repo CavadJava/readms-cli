@@ -1,0 +1,9 @@
+# Changelog
+
+
+## [0.1.1] - 2018-03-31
+- Fix long description on pypi
+
+## [0.1.0] - 2018-03-30
+- First working version of readms-cli
+- Features: get latest and download manga

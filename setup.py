@@ -6,7 +6,7 @@ def readme():
             return f.read()
 
 setup(name='readms-cli',
-      version='0.1',
+      version='0.1.1',
       description='A cli tool for downloading manga in https://readms.net',
       long_description=readme(),
       url='https://github.com/dslizardo/readms-cli',

@@ -25,4 +25,3 @@ Usage
    #Examples
    $ readms download "Boruto"
    $ readms download "One Piece"
-  
