@@ -9,6 +9,8 @@ Installation
 
  $ pip install readms-cli
 
+*Note: You might need to manually add readms on your system PATH*
+
 Usage
 ============
 
