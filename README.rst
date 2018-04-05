@@ -3,6 +3,13 @@ Overview
 ********
 A cli tool for downloading latest manga on https://readms.net
 
+
+Requirements
+============
+* python3.x
+* pip
+
+
 Installation
 ============
 .. code-block:: bash
